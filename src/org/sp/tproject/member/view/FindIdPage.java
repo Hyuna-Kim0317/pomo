@@ -7,13 +7,16 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Random;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.sp.tproject.calendar.model.ClientDAO;
 
+import util.DBManager;
 import util.MailSender;
 
 public class FindIdPage extends FindPage{
@@ -30,7 +33,10 @@ public class FindIdPage extends FindPage{
 	JButton bt_auth;
 	JPanel p_check;
 	JButton bt_check;
-	
+	String random="1111";	//보낼 인증번호
+	//아이디를 찾기위해 clientDAO 호출
+	ClientDAO clientDAO;
+	DBManager dbManager;
 	//메일 관련
 	MailSender mailSender;
 	
@@ -49,6 +55,8 @@ public class FindIdPage extends FindPage{
 		p_check = new JPanel();
 		bt_check = new JButton("아이디 찾기");
 		
+		dbManager = new DBManager();
+		clientDAO = new ClientDAO(dbManager);
 		//메일 관련
 		mailSender = new MailSender();
 
@@ -100,21 +108,71 @@ public class FindIdPage extends FindPage{
 		p_center.add(p_check);
 		p_check.add(bt_check);
 		
+		//인증완료 전에는 아이디 찾기 버튼 비활성화
+		bt_check.setEnabled(false);
+
 		bt_email.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("인증버튼 클릭");
-				boolean flag = mailSender.send(t_email.getText(), "Pomo 인증번호", "인증번호는 1111 입니다.");
+				clickSendBt();
 			}
 		});
-		
+		bt_auth.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				clickAuthBt();
+			}
+		});
 		bt_check.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("아이디 찾기 클릭"+t_name.getText());
 				findMainPage.showFindPage(findMainPage.FINDIDRESULT);
 				FindIdResultPage findIdResultPage=(FindIdResultPage)findMainPage.findPages[findMainPage.FINDIDRESULT];
 				findIdResultPage.setId(t_name.getText());
+				System.out.println(t_name.getText());
 			}
 			
 		});
 	}
+	//전송 버튼 클릭하면...
+	public void clickSendBt() {
+		random=makeRandom();
+		boolean check = clientDAO.findIdAuth(t_name.getText(), t_email.getText());
+		System.out.println(t_name.getText()+t_email.getText());
+		if(check == true) {
+			boolean flag = mailSender.send(t_email.getText(), "Pomo 인증번호", "인증번호는 "+random+" 입니다.");
+		}else {
+			JOptionPane.showMessageDialog(this, "이름 및 이메일을 확인해주세요");
+		}
+		
+	}
+	//인증버튼 클릭하면...
+	public void clickAuthBt() {
+		System.out.println("인증 클릭");
+		System.out.println(random);
+		if(random.equals(t_auth.getText())) {
+			System.out.println("인증완료");
+			//인증완료 후에는 아이디 찾기 버튼 비활성화
+			bt_check.setEnabled(true);
+		}
+		
+	}
+	
+	//랜덤 문자열 생성
+	public String makeRandom() {
+		int leftLimit = 48; // numeral '0'
+		int rightLimit = 122; // letter 'z'
+		int targetStringLength = 10;
+		Random random = new Random();
+
+		String generatedString = random.ints(leftLimit,rightLimit + 1)
+		  .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+		  .limit(targetStringLength)
+		  .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+		  .toString();
+
+		System.out.println(generatedString);
+		return generatedString;
+	}
+	
+	
+	
 }

@@ -34,6 +34,7 @@ public class FindMainPage extends Depth1Page{
 	public static final int FINDIDRESULT=1;
 	public static final int FINDPASS=2;
 	public static final int FINDPASSRESULT=3;
+	public static final int FINDPASSEND=4;
 	
 	public FindMainPage(ClientLoginPage clientLoginPage) {
 		this.clientLoginPage = clientLoginPage;
@@ -45,11 +46,13 @@ public class FindMainPage extends Depth1Page{
 		dbManager = new DBManager();
 		clientDAO = new ClientDAO(dbManager);
 		
-		findPages = new FindPage[4];
+		findPages = new FindPage[5];
 		findPages[FINDID] = new FindIdPage(this);
 		findPages[FINDIDRESULT] = new FindIdResultPage(clientLoginPage,this);
 		findPages[FINDPASS] = new FindPassPage(this);
 		findPages[FINDPASSRESULT] = new FindPassResultPage(this);
+		//성공하면 로그인 페이지로 넘어가야 함
+		findPages[FINDPASSEND] = new FindPassChange(clientLoginPage,this);
 			
 		
 		//스타일

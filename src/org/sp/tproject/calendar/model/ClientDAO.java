@@ -172,6 +172,43 @@ public class ClientDAO {
 		return dto;
 	}
 	
+	//사용자 아이디 인증(가입한 이름 및 메일인지 확인)
+	public boolean findIdAuth(String name, String email) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		boolean result=false;	//반환할 boolean 값
+		
+		con = dbManager.connect();
+		if(con==null) {
+			System.out.println(" 아이디 찾기 접속 실패");			
+		}else {
+			StringBuilder sb = new StringBuilder();
+			
+			try {
+				sb.append("select * from client where name=? and email=?");
+				pstmt = con.prepareStatement(sb.toString());
+				
+				//바인드 변수 채워넣기
+				pstmt.setString(1, name);
+				pstmt.setString(2, email);
+				
+				//쿼리 실행
+				rs = pstmt.executeQuery();
+				if(rs.next()) {	
+					result = true;
+				}
+			} catch (SQLException e) {
+			
+				e.printStackTrace();
+			}finally {
+				dbManager.release(con, pstmt, rs);
+			}
+		}
+		
+		
+		return result;
+	}
 	
 	//사용자 아이디 찾기
 	public String findId(String name) {
@@ -187,7 +224,7 @@ public class ClientDAO {
 			StringBuilder sb = new StringBuilder();
 			
 			try {
-				sb.append("select * from client where name = ?");
+				sb.append("select * from client where name =?");
 				pstmt = con.prepareStatement(sb.toString());
 				
 				//바인드 변수 채워넣기
@@ -207,5 +244,35 @@ public class ClientDAO {
 		}
 		
 		return yourid;
+	}
+	
+	//사용자 비밀번호 변경
+	public int changePass(String pass, String name) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int result = 0;	//DML  에 대한 성공, 실패 판단
+		
+		con = dbManager.connect();
+		if(con == null) {
+			System.out.println("사용자 비밀번호 변경 접속 실패");
+		}
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("update client set pass =? where name = ?");
+		
+		try {
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setString(1, pass);
+			pstmt.setString(2, name);
+			
+			result = pstmt.executeUpdate();		//DML 쿼리 실행
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			dbManager.release(con, pstmt);
+		}
+		
+		return result;
+		
 	}
 }

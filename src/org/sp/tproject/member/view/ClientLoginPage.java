@@ -4,14 +4,18 @@ import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
 
+import org.sp.tproject.main.view.MainFrame;
+
 public class ClientLoginPage extends JFrame{
+	MainFrame mainFrame;
 	Depth1Page[] pages;	//클라이언트의 로그인 및 아이디/비밀번호 페이지
 	public static final int LOGIN=0;
 	public static final int FIND=1;
 	
-	public ClientLoginPage() {
+	public ClientLoginPage(MainFrame mainFrame) {
+		this.mainFrame = mainFrame;
 		pages = new Depth1Page[2];
-		pages[LOGIN] = new LoginPage(this);
+		pages[LOGIN] = new LoginPage(mainFrame, this);
 		pages[FIND] = new FindMainPage(this);
 		
 		setLayout(new FlowLayout());
@@ -43,7 +47,11 @@ public class ClientLoginPage extends JFrame{
 		pack();
 	}
 	
-	public static void main(String[] args) {
-		new ClientLoginPage();
+	//메인페이지를 보이게 함
+	public void showMain() {
+		mainFrame.setVisible(true);
+		this.setVisible(false);
 	}
+	
+
 }

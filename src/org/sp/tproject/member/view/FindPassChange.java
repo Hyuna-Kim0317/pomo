@@ -18,9 +18,8 @@ import org.sp.tproject.calendar.model.ClientDAO;
 
 import util.DBManager;
 
-public class FindIdResultPage extends FindPage{
+public class FindPassChange extends FindPage{
 	ClientLoginPage clientLoginPage;
-	FindMainPage findMainPage;
 	ClientDAO clientDAO;
 	DBManager dbManager;
 	JPanel p_center;
@@ -29,12 +28,12 @@ public class FindIdResultPage extends FindPage{
 	JButton bt_findid_login;
 	
 	
-	public FindIdResultPage(ClientLoginPage clientLoginPage, FindMainPage findMainPage) {
+	public FindPassChange(ClientLoginPage clientLoginPage, FindMainPage findMainPage) {
 		dbManager = new DBManager();
 		clientDAO = new  ClientDAO(dbManager);
 		p_center = new JPanel();
 
-		yourid = new JLabel("");
+		yourid = new JLabel("비밀번호 바꾸기");
 		p_south = new JPanel();
 		bt_findid_login = new JButton("로그인 하기");
 		
@@ -77,12 +76,6 @@ public class FindIdResultPage extends FindPage{
 		});
 
 	}
-	//아이디 대입 
-	public void setId(String name) {
-		
-		String id =clientDAO.findId(name);
-		System.out.println(id);
-		yourid.setText(name+"님의 아이디는 "+id+" 입니다");
-	}
+
 	
 }

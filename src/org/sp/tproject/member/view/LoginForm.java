@@ -25,6 +25,7 @@ import util.HashConverter;
 
 public class LoginForm extends JFrame{
 	MainFrame mainFrame;
+	ClientLoginPage clientLoginPage;
 	RegistForm registForm;
 	JTextField login_id;
 	JPasswordField login_pass;
@@ -42,9 +43,9 @@ public class LoginForm extends JFrame{
 	ClientDAO clientDAO;
 	
 	
-	public LoginForm(MainFrame mainFrame) {
+	public LoginForm(MainFrame mainFrame, ClientLoginPage clientLoginPage) {
 		super("사용자 로그인");
-		this.mainFrame = mainFrame;
+//		this.mainFrame = mainFrame;
 //		this.registForm = registForm;
 		
 		login_id = new JTextField("아이디를 입력하세요");
@@ -131,6 +132,7 @@ public class LoginForm extends JFrame{
 			public void mouseClicked(MouseEvent e) {
 				JLabel la = (JLabel)e.getSource();
 				System.out.println("찾기 클릭");
+				
 			}
 		});
 		

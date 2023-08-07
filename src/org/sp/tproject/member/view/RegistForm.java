@@ -116,7 +116,7 @@ public class RegistForm extends JFrame{
 		
 		//이메일 도메인 선택 박스
 		regist_t_email_domain.addItem("선택하세요");
-		regist_t_email_domain.addItem("google.com");
+		regist_t_email_domain.addItem("gmail.com");
 		regist_t_email_domain.addItem("naver.com");
 		regist_t_email_domain.addItem("daum.net");
 		

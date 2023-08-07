@@ -19,15 +19,23 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.sp.tproject.calendar.view.DiaryPage;
+import org.sp.tproject.member.view.ClientLoginPage;
 import org.sp.tproject.member.view.LoginForm;
 import org.sp.tproject.member.view.RegistForm;
 
 public class MainFrame extends JFrame{
 	JPanel p_north; //네비게이션 영역
 	JPanel p_content; //각 페이지 및 컨텐츠들이 배치될 메인 영역
-	
-	LoginForm loginForm;	//로그인 창 
+	ClientLoginPage clientLoginPage;	//로그인 창
+//	LoginForm loginForm;	//로그인 창 
 	RegistForm registForm;	//회원가입 창
+	
+	
+	
+	
+	
+	
+	
 	
 	//네비게이션 이미지경로 배열
 	String[] naviImg= 
@@ -88,7 +96,8 @@ public class MainFrame extends JFrame{
 			});
 		}
 		
-		loginForm = new LoginForm(this);
+//		loginForm = new LoginForm(this);
+		clientLoginPage = new ClientLoginPage(this);
 	}
 	
 	public void login() { //로그인 시 호출하는 메서드

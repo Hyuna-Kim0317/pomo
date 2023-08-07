@@ -103,6 +103,8 @@ public class FindPassPage extends FindPage{
 		bt_check.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				findMainPage.showFindPage(3);
+				FindPassResultPage findPassResultPage = (FindPassResultPage)findMainPage.findPages[findMainPage.FINDPASSRESULT];
+				findPassResultPage.setPass(t_name.getText());
 			}
 		});
 			

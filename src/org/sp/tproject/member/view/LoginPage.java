@@ -43,7 +43,7 @@ public class LoginPage extends Depth1Page{
 	ClientDAO clientDAO;
 	
 	
-	public LoginPage(ClientLoginPage clientLoginPage) {
+	public LoginPage(MainFrame mainFrame,ClientLoginPage clientLoginPage) {
 //		super("사용자 로그인");
 		this.clientLoginPage = clientLoginPage;
 //		this.registForm = registForm;
@@ -160,8 +160,8 @@ public class LoginPage extends Depth1Page{
 			
 			JOptionPane.showMessageDialog(this, "로그인성공");
 			//메인 프레임 보이게 만들고, 로그인 창 없애기
-			mainFrame.setVisible(true);
-			this.setVisible(false);
+			//mainFrame.setVisible(true);
+			clientLoginPage.showMain();
 		}
 		
 	}
