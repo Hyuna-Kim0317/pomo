@@ -47,7 +47,7 @@ public class FindMainPage extends Depth1Page{
 		
 		findPages = new FindPage[4];
 		findPages[FINDID] = new FindIdPage(this);
-		findPages[FINDIDRESULT] = new FindIdResultPage(this);
+		findPages[FINDIDRESULT] = new FindIdResultPage(clientLoginPage,this);
 		findPages[FINDPASS] = new FindPassPage(this);
 		findPages[FINDPASSRESULT] = new FindPassResultPage(this);
 			

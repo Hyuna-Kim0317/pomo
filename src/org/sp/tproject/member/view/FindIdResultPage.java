@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,6 +19,7 @@ import org.sp.tproject.calendar.model.ClientDAO;
 import util.DBManager;
 
 public class FindIdResultPage extends FindPage{
+	ClientLoginPage clientLoginPage;
 	FindMainPage findMainPage;
 	FindFrame findFrame;
 	ClientDAO clientDAO;
@@ -26,7 +30,7 @@ public class FindIdResultPage extends FindPage{
 	JButton bt_findid_login;
 	
 	
-	public FindIdResultPage(FindMainPage findMainPage) {
+	public FindIdResultPage(ClientLoginPage clientLoginPage, FindMainPage findMainPage) {
 		dbManager = new DBManager();
 		clientDAO = new  ClientDAO(dbManager);
 		p_center = new JPanel();
@@ -66,6 +70,13 @@ public class FindIdResultPage extends FindPage{
 		
 //		setLayout(new GridBagLayout());
 		p_center.add(yourid);
+		bt_findid_login.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("로그인 하기 누름");
+				clientLoginPage.showHideDepth1(clientLoginPage.LOGIN);
+				
+			}
+		});
 
 	}
 	//아이디 대입 
