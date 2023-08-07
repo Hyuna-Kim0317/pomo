@@ -15,47 +15,57 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-public class test extends JFrame{
-	JPanel p_center;
-	JLabel yourid;
-	
-	
+import org.apache.commons.lang3.StringUtils;
 
+public class test extends JFrame{
+	String str = "*/";
+	String[] words = str.split("");
+	boolean br3;
 	
 	public test() {
-		p_center = new JPanel();
-		yourid = new JLabel("아이디는 000 입니다.");
-		yourid.setPreferredSize(new Dimension(1000,100));
-		add(yourid);
-		
-
-		
-		//스타일
-		
-		Dimension la_d = new Dimension(800,100);
-		p_center.setPreferredSize(new Dimension(1000,100));
-		p_center.setLocation(500, 500);
-		yourid.setPreferredSize(la_d);
-//		p_center.setBackground(Color.RED);
-
-		//폰트
-		Font la_font = new Font("goyang", Font.PLAIN, 30);
-		yourid.setFont(la_font);
-		
-		setLayout(new GridBagLayout());
-		add(p_center);
-		p_center.add(yourid);
-
-		
-		
-		
-		
-		setSize(1100,700);
-		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
+		specailChar();
+		br3 = specailChar();
+		for(int i=0; i<words.length; i++) {
+//				boolean br =StringUtils.isAlpha(words[i]);
+//				boolean br2=StringUtils.isNumeric(words[i]);
+				
+//				System.out.println(br|br2|br3);
+//				if(!(br|br2)) break;
+		}
+//		boolean a=StringUtils.isAlpha(str);
+//		boolean b = StringUtils.isNumeric(str);
+//		System.out.println(a||b);
+//		System.out.println(a);
+//		System.out.println(b);
 	}
+	public boolean specailChar() {
+		boolean result=false;
+//		for(int i=0; i<words.length; i++) {
+//			System.out.println("시작");
+			System.out.println(words[0]);
+			if(words[1] == "*") {
+				result=true;
+				System.out.println(result);
+			}
+			System.out.println(br3);
+//		}
+		
+		return result;
+	}
+	
+	public static void check(String args[]) {
+		  String StringValue = "이@문자열에$특수@문자가^있다.";
+		  String newStringValue = StringValue.replaceAll("[@$^]", " ");
+
+		  System.out.println("[기존 문자열: StringValue]");
+		  System.out.println(StringValue);
+		  System.out.println("\n[변경된 문자열: newStringValue]");
+		  System.out.println(newStringValue);
+	}
+	
 	public static void main(String[] args) {
 		new test();
 	}
 }
+
+//https://developer-talk.tistory.com/663

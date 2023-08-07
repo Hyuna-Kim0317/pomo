@@ -22,6 +22,7 @@ import org.sp.tproject.calendar.model.ClientDAO;
 
 import oracle.net.aso.p;
 import util.DBManager;
+import util.HashConverter;
 
 public class FindPassResultPage extends FindPage{
 	ClientDAO clientDAO;
@@ -39,6 +40,8 @@ public class FindPassResultPage extends FindPage{
 	
 	String whois;	//누구의 비밀번호를 바꿀건지...
 	
+	HashConverter hashConverter;
+	
 	
 	public FindPassResultPage(FindMainPage findMainPage) {
 		this.findMainPage = findMainPage;
@@ -53,6 +56,8 @@ public class FindPassResultPage extends FindPage{
 		t_pass_check = new JPasswordField();
 		la_pass_check = new JLabel();
 		bt_findpass_login = new JButton("비밀번호 변경");
+		
+		hashConverter = new HashConverter();
 
 		//스타일
 		Dimension find_panel_d = new Dimension(850,120);
@@ -145,6 +150,8 @@ public class FindPassResultPage extends FindPage{
 	public void changePass() {
 		System.out.println("비밀번호 변경 클릭");
 		String who = setPass(whois);
+		
+//		hashConverter.convertToHash(new String(regist_t_pass.getPassword()));
 		int result = clientDAO.changePass(new String(t_pass.getPassword()),who);	//비밀번호 변경 메서드 호출
 		if(result >0) {
 			findMainPage.showFindPage(findMainPage.FINDPASSEND);

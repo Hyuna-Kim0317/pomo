@@ -11,6 +11,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import util.HashConverter;
+
 public class FindPassPage extends FindPage{
 	FindMainPage findMainPage;
 	JPanel p_center;
@@ -30,6 +32,7 @@ public class FindPassPage extends FindPage{
 	JButton bt_check;
 	
 	
+	
 	public FindPassPage(FindMainPage findMainPage) {
 		
 		p_center = new JPanel();
@@ -45,6 +48,7 @@ public class FindPassPage extends FindPage{
 		bt_auth = new JButton("인증하기");
 		p_check = new JPanel();
 		bt_check = new JButton("비밀번호 찾기");
+		
 
 		//폰트
 		Font regist_text_font = new Font("goyang", Font.PLAIN, 30);

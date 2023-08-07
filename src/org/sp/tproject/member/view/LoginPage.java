@@ -152,6 +152,7 @@ public class LoginPage extends Depth1Page{
 		Client clientDTO = clientDAO.login(client);
 		System.out.println(client.getId());
 		System.out.println(client.getPass());
+
 		
 		if(clientDTO == null) {	//로그인 실패
 			JOptionPane.showMessageDialog(this, "로그인실패");
