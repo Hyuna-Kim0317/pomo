@@ -52,8 +52,8 @@ public class FindPassResultPage extends FindPage{
 		p_south = new JPanel();
 		p_pass = new JPanel();
 		p_pass_check = new JPanel();
-		t_pass = new JPasswordField("비밀번호");
-		t_pass_check = new JPasswordField();
+		t_pass = new JPasswordField("");
+		t_pass_check = new JPasswordField("");
 		la_pass_check = new JLabel();
 		bt_findpass_login = new JButton("비밀번호 변경");
 		

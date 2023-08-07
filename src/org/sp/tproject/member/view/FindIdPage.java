@@ -110,7 +110,8 @@ public class FindIdPage extends FindPage{
 		
 		//인증완료 전에는 아이디 찾기 버튼 비활성화
 		bt_check.setEnabled(false);
-
+		
+		
 		bt_email.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				clickSendBt();

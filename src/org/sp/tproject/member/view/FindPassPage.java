@@ -6,12 +6,18 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Random;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.sp.tproject.calendar.model.ClientDAO;
+
+import util.DBManager;
 import util.HashConverter;
+import util.MailSender;
 
 public class FindPassPage extends FindPage{
 	FindMainPage findMainPage;
@@ -30,8 +36,15 @@ public class FindPassPage extends FindPage{
 	JButton bt_auth;
 	JPanel p_check;
 	JButton bt_check;
+	//보낼 인증 번호
+	String random = "1111";
 	
+	//사용자 계정이 존재하기 확인하기 위해 db 연동 필요
+	DBManager dbManager;
+	ClientDAO clientDAO;
 	
+	//메일 관련
+	MailSender mailSender;	
 	
 	public FindPassPage(FindMainPage findMainPage) {
 		
@@ -49,6 +62,12 @@ public class FindPassPage extends FindPage{
 		p_check = new JPanel();
 		bt_check = new JButton("비밀번호 찾기");
 		
+		//db 관련
+		dbManager = new DBManager();
+		clientDAO = new ClientDAO(dbManager);
+		
+		//메일 관련
+		mailSender = new MailSender();
 
 		//폰트
 		Font regist_text_font = new Font("goyang", Font.PLAIN, 30);
@@ -103,7 +122,24 @@ public class FindPassPage extends FindPage{
 		p_center.add(p_check);
 		p_check.add(bt_check);
 		
-
+		//처음에 비밀번호 찾기 버튼은 비활성화...
+		bt_check.setEnabled(false);
+		
+		//전송버튼 눌렀을 때...
+		bt_email.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				clickSendBt();
+			}
+		});
+		
+		//인증버튼 눌렀을 때..
+		bt_auth.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				clickAuthBt();
+			}
+		});
+		
+		//비밀번호 찾기 버튼을 눌렀을 때...
 		bt_check.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				findMainPage.showFindPage(3);
@@ -111,8 +147,50 @@ public class FindPassPage extends FindPage{
 				findPassResultPage.setPass(t_name.getText());
 			}
 		});
+		
+		
 			
 	}
+	//전송 버튼 클릭하면...
+	public void clickSendBt() {
+		System.out.println("전송버튼 누름?");
+		random = makeRandom();
+		boolean check = clientDAO.findPassAuth(t_name.getText(), t_id.getText(),t_email.getText());
+		System.out.println(t_name.getText()+t_email.getText());
+		if(check == true) {
+			boolean flag = mailSender.send(t_email.getText(), "Pomo 인증번호", "인증번호는 "+random+" 입니다.");
+		}else {
+			JOptionPane.showMessageDialog(this, "이름 및 아이디 또는 이메일을 확인해주세요");
+		}
+		
+	}
+	//인증 버튼 클릭하면...
+	public void clickAuthBt() {
+		System.out.println("인증버튼 누름?");
+		if(random.equals(t_auth.getText())) {
+			bt_check.setEnabled(true);
+		}else {
+			JOptionPane.showMessageDialog(this, "인증번호를 확인해주세요");
+		}
+	}
+	
+	//랜덤 문자열 생성
+	public String makeRandom() {
+		int leftLimit = 48; // numeral '0'
+		int rightLimit = 122; // letter 'z'
+		int targetStringLength = 10;
+		Random random = new Random();
+
+		String generatedString = random.ints(leftLimit,rightLimit + 1)
+		  .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+		  .limit(targetStringLength)
+		  .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+		  .toString();
+
+		System.out.println(generatedString);
+		return generatedString;
+	}
+	
 	
 	
 }

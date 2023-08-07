@@ -310,11 +310,16 @@ public class RegistForm extends JFrame{
 		regist_t_pass.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
 				registBtEnable();
+				passValidate();
 				int key = e.getKeyCode();
 				//만약 패스워드 칸을 수정해서 조건을 만족시키지 못하면 가입 버튼 비활성화
 				if(key == KeyEvent.VK_BACK_SPACE) {
 					registBtDisable();
 					System.out.println(regist_t_id.getText().length());
+				}
+				boolean flag = passValidate();
+				if(!flag){
+					regist_la_pass_info.setText("3~13자 사이의 영문, 숫자만 입력하세요");
 				}
 
 			}
@@ -414,7 +419,7 @@ public class RegistForm extends JFrame{
 		boolean br = false;
 		boolean br2 = false;
 		
-		if((id.length()>=3) && (id.length()<=7)) {
+		if((id.length()>=3) && (id.length()<=13)) {
 			regist_la_id_info.setText("");
 			flag = true;
 		}
@@ -429,6 +434,36 @@ public class RegistForm extends JFrame{
 			totalFlag = true;}
 		System.out.println((br||br2) && flag);
 		return totalFlag;
+	}
+	//비밀번호 유효성 검사
+	public boolean passValidate() {
+		System.out.println("3~13자 사이의 영문, 숫자만 입력하세요");
+		String pass = new String(regist_t_pass.getPassword());
+		boolean totalFlag = false;
+		boolean flag = false;
+//		boolean br = false;
+//		boolean br2 = false;
+		
+		if((pass.length()>=3) && (pass.length()<=13)) {
+			System.out.println("맞음");
+			regist_la_pass_info.setText("");
+			flag = true;
+		}
+		
+//		String[] words = regist_t_pass.getText().split("");
+//		for(int i=0; i<words.length; i++) {
+//				br =StringUtils.isAlpha(words[i]);
+//				br2=StringUtils.isNumeric(words[i]);
+//
+//				System.out.println("특수문자미사용 "+ (br||br2));
+//		}
+//		
+//		if((br||br2) && flag){
+//			totalFlag = true;}
+//		System.out.println((br||br2) && flag);
+		
+		return flag;
+
 	}
 	//비밀번호 일치 확인
 	public boolean passCheck() {
@@ -452,6 +487,7 @@ public class RegistForm extends JFrame{
 		return ox;
 		
 	}
+	
 	//등록 버튼 활성화
 	public void registBtEnable() {
 		//이름, 아이디, 비밀번호, 비밀번호 확인, 닉네임, 이메일

@@ -245,6 +245,44 @@ public class ClientDAO {
 		
 		return yourid;
 	}
+	//사용자 비밀번호 찾기 인증
+	public boolean findPassAuth(String name, String id,String email) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		boolean result=false;	//반환할 boolean 값
+		
+		con = dbManager.connect();
+		if(con==null) {
+			System.out.println(" 아이디 찾기 접속 실패");			
+		}else {
+			StringBuilder sb = new StringBuilder();
+			
+			try {
+				sb.append("select * from client where name=? and id=? and email=?");
+				pstmt = con.prepareStatement(sb.toString());
+				
+				//바인드 변수 채워넣기
+				pstmt.setString(1, name);
+				pstmt.setString(2, id);
+				pstmt.setString(3, email);
+				
+				//쿼리 실행
+				rs = pstmt.executeQuery();
+				if(rs.next()) {	
+					result = true;
+				}
+			} catch (SQLException e) {
+			
+				e.printStackTrace();
+			}finally {
+				dbManager.release(con, pstmt, rs);
+			}
+		}
+		
+		
+		return result;
+	}
 	
 	//사용자 비밀번호 변경
 	public int changePass(String pass, String name) {
