@@ -9,7 +9,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -18,40 +17,51 @@ import org.sp.tproject.calendar.model.ClientDAO;
 
 import util.DBManager;
 
-public class FindFrame extends JFrame{
+public class FindMainPage extends Depth1Page{
+	ClientLoginPage clientLoginPage;
 	ClientDAO clientDAO;
 	DBManager dbManager;
 	JPanel p_north;
 	JPanel p_center;
 	JButton bt_find_id;
 	JButton bt_find_pass;
-	public static String find_id_name=new String();;
+	String find_id_name=new String();
 	
-
+	//컨텐츠 페이지
+	FindPage[] findPages;
 	
-
-	public FindFrame() {
+	public static final int FINDID=0;
+	public static final int FINDIDRESULT=1;
+	public static final int FINDPASS=2;
+	public static final int FINDPASSRESULT=3;
+	
+	public FindMainPage(ClientLoginPage clientLoginPage) {
+		this.clientLoginPage = clientLoginPage;
 		p_north = new JPanel();
 		p_center = new JPanel();
 		bt_find_id = new JButton("아이디 찾기");
 		bt_find_pass = new JButton("비밀번호 찾기");
-		
+		findPages = new FindPage[4];
 		dbManager = new DBManager();
 		clientDAO = new ClientDAO(dbManager);
 		
-
-
+		findPages = new FindPage[4];
+		findPages[FINDID] = new FindIdPage(this);
+		findPages[FINDIDRESULT] = new FindIdResultPage(this);
+		findPages[FINDPASS] = new FindPassPage(this);
+		findPages[FINDPASSRESULT] = new FindPassResultPage(this);
+			
 		
 		//스타일
 		Dimension bt_d = new Dimension(200,60);
-		p_north.setPreferredSize(new Dimension(1100,70));
+		p_north.setPreferredSize(new Dimension(1100,80));
+		p_center.setPreferredSize(new Dimension(1100,530));
 		p_north.setBorder(new TitledBorder(new LineBorder(Color.LIGHT_GRAY,1),""));
 		bt_find_id.setPreferredSize(bt_d);
 		bt_find_id.setBackground(Color.WHITE);
 		bt_find_pass.setPreferredSize(bt_d);
 		bt_find_pass.setBackground(Color.WHITE);
 		
-		setLayout(new BorderLayout());
 		
 		//폰트
 
@@ -60,34 +70,37 @@ public class FindFrame extends JFrame{
 		bt_find_pass.setFont(find_bt_font);
 		
 		//조립
+//		setLayout(new BorderLayout());
+		
 		add(p_north, BorderLayout.NORTH);
-		for(int i=0; i<findPages.length;i++) {
+		add(p_center, BorderLayout.CENTER);
+		
+		for(int i=0; i<findPages.length; i++) {
 			p_center.add(findPages[i]);
 		}
+		
+//		p_north.setBackground(Color.RED);
+//		p_center.setBackground(Color.GREEN);
+		
+		setLayout(new BorderLayout());
+		add(p_north,new BorderLayout().NORTH);
 		add(p_center);
+		
 		p_north.setLayout(new FlowLayout(FlowLayout.LEFT));
 		p_north.add(bt_find_id);
 		p_north.add(bt_find_pass);
 		
-		
-		//나중에 삭제
-		setSize(1100,600);
 		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+		setPreferredSize(new Dimension(1100,600));
 		
-		//최초로 아이디 찾기 페이지는 보여지게..
-		bt_find_id.setBackground(Color.DARK_GRAY);
-		bt_find_id.setForeground(Color.WHITE);
-		showFindPage(0);
-		
-		//찾기 버튼에 대한 이벤트 연결
+		//아이디 찾기 버튼에 대한 이벤트 연결
 		bt_find_id.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				bt_find_id.setBackground(Color.DARK_GRAY);
 				bt_find_id.setForeground(Color.WHITE);
 				bt_find_pass.setBackground(Color.WHITE);
 				bt_find_pass.setForeground(Color.BLACK);
+				System.out.println("아이디찾기 누름");
 				showFindPage(0);
 			}
 		});
@@ -97,7 +110,7 @@ public class FindFrame extends JFrame{
 				bt_find_id.setForeground(Color.BLACK);
 				bt_find_pass.setBackground(Color.DARK_GRAY);
 				bt_find_pass.setForeground(Color.WHITE);
-				showFindPage(1);
+				showFindPage(2);
 			}
 		});
 
@@ -106,15 +119,14 @@ public class FindFrame extends JFrame{
 	//페이지 전환처리
 	public void showFindPage(int n) {
 		for(int i=0; i<findPages.length; i++) {
-			if(i == n) {	//넘겨받은 매개변수와 i가 일치 = 사용자가 n을 누르면..
-				findPages[i].setVisible(true);	//보이게 처리
+			if(i == n) {
+				findPages[i].setVisible(true); //보이게 처리
 			}else {
 				
-				findPages[i].setVisible(false);	//안 보이게 처리
+				findPages[i].setVisible(false); //안 보이게 처리
 			}
 		}
 	}
-	public static void main(String[] args) {
-		new FindFrame();
-	}
+	
+	
 }

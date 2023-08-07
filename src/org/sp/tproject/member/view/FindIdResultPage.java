@@ -15,7 +15,8 @@ import org.sp.tproject.calendar.model.ClientDAO;
 
 import util.DBManager;
 
-public class FindIdInfoPage extends FindPage{
+public class FindIdResultPage extends FindPage{
+	FindMainPage findMainPage;
 	FindFrame findFrame;
 	ClientDAO clientDAO;
 	DBManager dbManager;
@@ -25,7 +26,7 @@ public class FindIdInfoPage extends FindPage{
 	JButton bt_findid_login;
 	
 	
-	public FindIdInfoPage(String name) {
+	public FindIdResultPage(FindMainPage findMainPage) {
 		dbManager = new DBManager();
 		clientDAO = new  ClientDAO(dbManager);
 		p_center = new JPanel();

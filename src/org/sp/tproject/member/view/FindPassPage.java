@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class FindPassPage extends FindPage{
-	FindFrame findFrame;
+	FindMainPage findMainPage;
 	JPanel p_center;
 	
 	JPanel p_name;
@@ -30,7 +30,7 @@ public class FindPassPage extends FindPage{
 	JButton bt_check;
 	
 	
-	public FindPassPage(FindFrame findFrame) {
+	public FindPassPage(FindMainPage findMainPage) {
 		
 		p_center = new JPanel();
 		p_name = new JPanel();
@@ -102,7 +102,7 @@ public class FindPassPage extends FindPage{
 
 		bt_check.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				findFrame.showFindPage(3);
+				findMainPage.showFindPage(3);
 			}
 		});
 			

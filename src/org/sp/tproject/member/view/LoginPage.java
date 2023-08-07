@@ -1,4 +1,5 @@
 package org.sp.tproject.member.view;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -7,7 +8,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -21,10 +21,11 @@ import org.sp.tproject.main.view.MainFrame;
 import util.DBManager;
 import util.HashConverter;
 
-
-
-public class LoginForm extends JFrame{
+public class LoginPage extends Depth1Page{
+	
 	MainFrame mainFrame;
+	
+	ClientLoginPage clientLoginPage;
 	RegistForm registForm;
 	JTextField login_id;
 	JPasswordField login_pass;
@@ -42,9 +43,9 @@ public class LoginForm extends JFrame{
 	ClientDAO clientDAO;
 	
 	
-	public LoginForm(MainFrame mainFrame) {
-		super("사용자 로그인");
-		this.mainFrame = mainFrame;
+	public LoginPage(ClientLoginPage clientLoginPage) {
+//		super("사용자 로그인");
+		this.clientLoginPage = clientLoginPage;
 //		this.registForm = registForm;
 		
 		login_id = new JTextField("아이디를 입력하세요");
@@ -88,11 +89,11 @@ public class LoginForm extends JFrame{
 		login_south.add(login_line);
 		login_south.add(login_find);
 		
-
-		setSize(500,300);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setVisible(true);
-		setLocationRelativeTo(null);
+		setPreferredSize(new Dimension(500,250));
+//		setSize(500,300);
+//		setDefaultCloseOperation(EXIT_ON_CLOSE);
+//		setVisible(true);
+//		setLocationRelativeTo(null);
 		login_id.addMouseListener(new MouseAdapter() {
 
 			public void mousePressed(MouseEvent e) {
@@ -131,6 +132,7 @@ public class LoginForm extends JFrame{
 			public void mouseClicked(MouseEvent e) {
 				JLabel la = (JLabel)e.getSource();
 				System.out.println("찾기 클릭");
+				clientLoginPage.showHideDepth1(clientLoginPage.FIND);
 			}
 		});
 		
@@ -162,8 +164,5 @@ public class LoginForm extends JFrame{
 			this.setVisible(false);
 		}
 		
-		
 	}
-	
-	
 }

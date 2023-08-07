@@ -1,6 +1,7 @@
 package org.sp.tproject.member.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -16,7 +17,7 @@ import org.sp.tproject.calendar.model.ClientDAO;
 import util.MailSender;
 
 public class FindIdPage extends FindPage{
-	FindFrame findFrame;
+	FindMainPage findMainPage;
 	JPanel p_center;
 	JPanel p_name;
 	JTextField t_name;
@@ -34,7 +35,7 @@ public class FindIdPage extends FindPage{
 	MailSender mailSender;
 	
 	
-	public FindIdPage(FindFrame findFrame) {
+	public FindIdPage(FindMainPage findMainPage) {
 		
 		p_center = new JPanel();
 		p_name = new JPanel();
@@ -66,7 +67,7 @@ public class FindIdPage extends FindPage{
 		Dimension find_panel_d = new Dimension(850,120);
 		Dimension find_text_d = new Dimension(600,80);
 		Dimension find_bt_d = new Dimension(150,60);
-		p_center.setPreferredSize(new Dimension(1000,600));
+		p_center.setPreferredSize(new Dimension(1500,600));
 		p_name.setPreferredSize(find_panel_d);
 		t_name.setPreferredSize(find_text_d);
 		p_email.setPreferredSize(find_panel_d);
@@ -86,7 +87,8 @@ public class FindIdPage extends FindPage{
 		p_name.setLayout(new FlowLayout(FlowLayout.LEFT));
 		p_email.setLayout(new FlowLayout(FlowLayout.LEFT));
 		p_auth.setLayout(new FlowLayout(FlowLayout.LEFT));
-		
+		add(p_center);
+//		p_center.setBackground(Color.DARK_GRAY);
 		p_center.add(p_name);
 		p_name.add(t_name);
 		p_center.add(p_email);
@@ -104,17 +106,13 @@ public class FindIdPage extends FindPage{
 				boolean flag = mailSender.send(t_email.getText(), "Pomo 인증번호", "인증번호는 1111 입니다.");
 			}
 		});
+		
 		bt_check.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("아이디 찾기 클릭"+t_name.getText());
-				
-				findFrame.find_id_name = t_name.getText();
-				System.out.println(findFrame.find_id_name);
-				
-				FindIdInfoPage findIdInfoPage=(FindIdInfoPage)findFrame.findPages[2];
-				findIdInfoPage.setId(findFrame.find_id_name);
-				
-				findFrame.showFindPage(2);
+				findMainPage.showFindPage(findMainPage.FINDIDRESULT);
+				FindIdResultPage findIdResultPage=(FindIdResultPage)findMainPage.findPages[findMainPage.FINDIDRESULT];
+				findIdResultPage.setId(t_name.getText());
 			}
 			
 		});

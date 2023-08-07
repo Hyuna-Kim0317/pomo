@@ -9,11 +9,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class FindPassInfoPage extends FindPage{
+public class FindPassResultPage extends FindPage{
+	FindMainPage findMainPage;
 	JPanel p_center;
 	JLabel yourid;
 	
-	public FindPassInfoPage() {
+	public FindPassResultPage(FindMainPage findMainPage) {
 		p_center = new JPanel();
 		yourid = new JLabel("님의 비밀번호는 000 입니다.");
 
