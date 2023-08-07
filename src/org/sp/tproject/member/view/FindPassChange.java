@@ -33,7 +33,7 @@ public class FindPassChange extends FindPage{
 		clientDAO = new  ClientDAO(dbManager);
 		p_center = new JPanel();
 
-		yourid = new JLabel("비밀번호 바꾸기");
+		yourid = new JLabel("비밀번호가 성공적으로 변경되었습니다.");
 		p_south = new JPanel();
 		bt_findid_login = new JButton("로그인 하기");
 		

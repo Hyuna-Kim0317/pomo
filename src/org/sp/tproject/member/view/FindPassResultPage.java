@@ -151,8 +151,8 @@ public class FindPassResultPage extends FindPage{
 		System.out.println("비밀번호 변경 클릭");
 		String who = setPass(whois);
 		
-//		hashConverter.convertToHash(new String(regist_t_pass.getPassword()));
-		int result = clientDAO.changePass(new String(t_pass.getPassword()),who);	//비밀번호 변경 메서드 호출
+		String pass = hashConverter.convertToHash(new String(t_pass.getPassword()));
+		int result = clientDAO.changePass(pass,who);	//비밀번호 변경 메서드 호출
 		if(result >0) {
 			findMainPage.showFindPage(findMainPage.FINDPASSEND);
 			System.out.println("업데이트 성공");

@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import org.apache.commons.lang3.StringUtils;
 import org.sp.tproject.calendar.domain.Client;
 import org.sp.tproject.calendar.model.ClientDAO;
 
@@ -39,10 +40,12 @@ public class RegistForm extends JFrame{
 	JLabel regist_la_id;
 	JTextField regist_t_id;
 	JButton regist_bt_id;	//아이디 중복확인 버튼
+	JLabel regist_la_id_info;	//아이디 안내 메세지
 	
 	JPanel regist_p_pass;
 	JLabel regist_la_pass;
 	JPasswordField regist_t_pass;
+	JLabel regist_la_pass_info;	//패스워드 안내 메세지
 	
 	JPanel regist_p_pass_check;
 	JLabel regist_la_pass_check;
@@ -53,6 +56,7 @@ public class RegistForm extends JFrame{
 	JLabel regist_la_nickname;
 	JTextField regist_t_nickname;
 	JButton regist_bt_nickname;
+	JLabel regist_la_nickname_info;	//닉네임 안내 메세지
 	
 	JPanel regist_p_email;
 	JLabel regist_la_email;
@@ -84,10 +88,12 @@ public class RegistForm extends JFrame{
 		regist_la_id = new JLabel("아이디");
 		regist_t_id = new JTextField();
 		regist_bt_id =new JButton("중복확인");
+		regist_la_id_info = new JLabel();
 		
 		regist_p_pass = new JPanel();
 		regist_la_pass = new JLabel("비밀번호");
 		regist_t_pass = new JPasswordField();
+		regist_la_pass_info = new JLabel("");
 		
 		regist_p_pass_check = new JPanel();
 		regist_la_pass_check = new JLabel("비밀번호 확인");
@@ -98,6 +104,7 @@ public class RegistForm extends JFrame{
 		regist_la_nickname = new JLabel("닉네임");
 		regist_t_nickname = new JTextField();
 		regist_bt_nickname = new JButton("중복확인");
+		regist_la_nickname_info = new JLabel();
 		
 		regist_la_email = new JLabel();
 		
@@ -124,19 +131,25 @@ public class RegistForm extends JFrame{
 		//폰트
 		Font regist_la_font = new Font("goyang", Font.PLAIN, 20);
 		Font regist_bt_font = new Font("goyang", Font.BOLD, 20);
-		Font regist_info_font = new Font("goyang", Font.BOLD, 18);
+		Font regist_info_font = new Font("goyang", Font.BOLD, 12);
 		regist_la_name.setFont(regist_la_font);
 		regist_t_name.setFont(regist_la_font);
 		regist_la_id.setFont(regist_la_font);
 		regist_t_id.setFont(regist_la_font);
+		regist_la_id_info.setFont(regist_info_font);
+		regist_la_id_info.setForeground(Color.red);
 		regist_la_pass.setFont(regist_la_font);
 		regist_t_pass.setFont(regist_la_font);
+		regist_la_pass_info.setFont(regist_info_font);
+		regist_la_pass_info.setForeground(Color.red);
 		regist_la_pass_check.setFont(regist_la_font);
 		regist_t_pass_check.setFont(regist_la_font);
 		regist_la_pass_check_info.setFont(regist_info_font);
 		regist_la_pass_check_info.setForeground(Color.red);
 		regist_la_nickname.setFont(regist_la_font);
 		regist_t_nickname.setFont(regist_la_font);
+		regist_la_nickname_info.setFont(regist_info_font);
+		regist_la_nickname_info.setForeground(Color.red);
 		regist_t_email.setFont(regist_la_font);
 		regist_la_email_link.setFont(regist_la_font);
 		
@@ -146,10 +159,10 @@ public class RegistForm extends JFrame{
 		
 		//디자인
 		setLayout(new FlowLayout());
-		Dimension regist_panel_d = new Dimension(450,80);
-		Dimension regist_label_d = new Dimension(150,50);
+		Dimension regist_panel_d = new Dimension(600,80);
+		Dimension regist_label_d = new Dimension(200,50);
 		Dimension regist_text_d = new Dimension(200,50);
-		Dimension regist_info_d = new Dimension(200,30);
+		Dimension regist_info_d = new Dimension(250,20);
 		regist_p_name.setPreferredSize(regist_panel_d);
 		regist_p_name.setLayout(new FlowLayout(FlowLayout.LEFT));
 		regist_p_name.setAlignmentX(LEFT_ALIGNMENT);
@@ -160,11 +173,14 @@ public class RegistForm extends JFrame{
 		regist_p_id.setLayout(new FlowLayout(FlowLayout.LEFT));
 		regist_la_id.setPreferredSize(regist_label_d);
 		regist_t_id.setPreferredSize(regist_text_d);
+		regist_la_id_info.setPreferredSize(regist_info_d);
 		
 		regist_p_pass.setPreferredSize(regist_panel_d);
 		regist_p_pass.setLayout(new FlowLayout(FlowLayout.LEFT));
 		regist_la_pass.setPreferredSize(regist_label_d);
 		regist_t_pass.setPreferredSize(regist_text_d);
+		regist_la_pass_info.setPreferredSize(regist_info_d);
+		
 		
 		regist_p_pass_check.setPreferredSize(regist_panel_d);
 		regist_p_pass_check.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -176,6 +192,7 @@ public class RegistForm extends JFrame{
 		regist_p_nickname.setLayout(new FlowLayout(FlowLayout.LEFT));
 		regist_la_nickname.setPreferredSize(regist_label_d);
 		regist_t_nickname.setPreferredSize(regist_text_d);
+		regist_la_nickname_info.setPreferredSize(regist_info_d);
 		
 		regist_p_email.setPreferredSize(regist_panel_d);
 		regist_p_email.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -193,9 +210,11 @@ public class RegistForm extends JFrame{
 		regist_p_id.add(regist_la_id);
 		regist_p_id.add(regist_t_id);
 		regist_p_id.add(regist_bt_id);
+		regist_p_id.add(regist_la_id_info);
 		add(regist_p_pass);
 		regist_p_pass.add(regist_la_pass);
 		regist_p_pass.add(regist_t_pass);
+		regist_p_pass.add(regist_la_pass_info);
 		add(regist_p_pass_check);
 		regist_p_pass_check.add(regist_la_pass_check);
 		regist_p_pass_check.add(regist_t_pass_check);
@@ -204,6 +223,7 @@ public class RegistForm extends JFrame{
 		regist_p_nickname.add(regist_la_nickname);
 		regist_p_nickname.add(regist_t_nickname);
 		regist_p_nickname.add(regist_bt_nickname);
+		regist_p_nickname.add(regist_la_nickname_info);
 		
 		add(regist_p_email);
 		regist_p_email.add(regist_t_email);
@@ -216,7 +236,7 @@ public class RegistForm extends JFrame{
 		
 		
 		//전체 프레임 사이즈
-		setSize(600,600);
+		setSize(630,650);
 		setVisible(true);	//처음에는 회원가입 창 안보이게..
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -257,6 +277,10 @@ public class RegistForm extends JFrame{
 				if(key == KeyEvent.VK_BACK_SPACE) {
 					registBtDisable();
 					System.out.println(regist_t_id.getText().length());
+				}
+				boolean flag = idCheck();
+				if(!flag){
+					regist_la_id_info.setText("3~13자 사이의 영문, 숫자만 입력하세요");
 				}
 				
 				
@@ -362,9 +386,11 @@ public class RegistForm extends JFrame{
 //
 //			}
 //		});
+		//이메일 도메인 선택할 때 유효성 체크
 		regist_t_email_domain.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				registBtEnable();
+				registBtDisable();
 				
 			}
 		});
@@ -378,7 +404,32 @@ public class RegistForm extends JFrame{
 //			setDefaultCloseOperation(EXIT_ON_CLOSE);
 		});
 	}
-	
+	//염문 숫자 이외의 글이 채워진다면...
+	//아이디 유효성 체크
+	public boolean idCheck() {
+		System.out.println("3~13자 사이의 영문, 숫자만 입력하세요");
+		String id = regist_t_id.getText();
+		boolean totalFlag = false;
+		boolean flag = false;
+		boolean br = false;
+		boolean br2 = false;
+		
+		if((id.length()>=3) && (id.length()<=7)) {
+			regist_la_id_info.setText("");
+			flag = true;
+		}
+		String[] words = regist_t_id.getText().split("");
+		for(int i=0; i<words.length; i++) {
+				br =StringUtils.isAlpha(words[i]);
+				br2=StringUtils.isNumeric(words[i]);
+
+				System.out.println("특수문자미사용 "+ (br||br2));
+		}
+		if((br||br2) && flag){
+			totalFlag = true;}
+		System.out.println((br||br2) && flag);
+		return totalFlag;
+	}
 	//비밀번호 일치 확인
 	public boolean passCheck() {
 		//사용자가 처음 입력한 비밀번호와 비밀번호 확인에 누름 비밀번호가 일치하는지 확인
@@ -393,6 +444,9 @@ public class RegistForm extends JFrame{
 		if(pass.equals(pass_check)) {	
 			System.out.println("비밀번호 일치함");
 			regist_la_pass_check_info.setText("비밀번호가 일치합니다.");
+		}else {
+			regist_la_pass_check_info.setText("비밀번호가 일치하지 않습니다.");
+			
 		}
 		
 		return ox;
@@ -423,7 +477,7 @@ public class RegistForm extends JFrame{
 //		}
 		//비밀번호가 일치해야 등록 버튼 활성화
 		boolean passcheck =(regist_la_pass_check_info.getText()).equals("비밀번호가 일치합니다.");
-		if((name_text>2) && (id_text >3)&&(pass_text >3) && passcheck && (nickname_text >3) && (email_text > 3) && (email_domain_index>0)) {
+		if((name_text>=2) && (id_text >=3)&&(pass_text >=3) && passcheck && (nickname_text >=3) && (email_text > 3) && (email_domain_index>0)) {
 			
 			regist_bt_flag = true;
 			regist_bt.setEnabled(regist_bt_flag);	//등록 버튼 활성화
@@ -444,9 +498,10 @@ public class RegistForm extends JFrame{
 		int nickname_text = regist_t_nickname.getText().length();
 		//이메일 텍스트필드 글자수
 		int email_text = regist_t_email.getText().length();
+		int email_domain_index = regist_t_email_domain.getSelectedIndex();
 		
 		
-		if((name_text <= 1) || (id_text <= 3) ||(pass_text >3)|| (nickname_text <= 3) ||  (email_text <= 3)) {
+		if((name_text <= 1) || (id_text < 3) ||(pass_text <3)|| (nickname_text < 3) ||  (email_text <= 3)||(email_domain_index==0)) {
 				
 			regist_bt.setEnabled(false);	//등록 버튼 비활성화
 		}
@@ -480,6 +535,7 @@ public class RegistForm extends JFrame{
 		}
 		
 	}
+	
 	
 
 //	public static void main(String[] args) {
