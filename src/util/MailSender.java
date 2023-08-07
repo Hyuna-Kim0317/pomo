@@ -48,5 +48,39 @@ public class MailSender {
 		}
 		return result;
 	}
+	
+	public boolean idsend(String to, String title, String content ) {
+		boolean result=false; //성공 여부를 알수있는 반환값
+		
+		props.put("mail.smtp.host", host);
+		props.put("mail.smtp.port", 465);
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.ssl.enable", "true");
+		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+
+		Session session = Session.getDefaultInstance(props, new Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+	               return new PasswordAuthentication(user, password);
+	            }	
+		});
+		
+		try {
+			
+			MimeMessage message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(user));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+			message.setSubject(title);
+			message.setContent(content, "인증번호는 1111 입니다.");
+			
+			Transport.send(message);
+			//System.out.println("Success Message Send");
+			result=true;
+		} catch (MessagingException e) {
+			e.printStackTrace();
+			result=false;
+		}
+		return result;
+	}
+	
 
 }

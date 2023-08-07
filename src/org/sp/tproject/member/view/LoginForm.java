@@ -129,6 +129,7 @@ public class LoginForm extends JFrame{
 			public void mouseClicked(MouseEvent e) {
 				JLabel la = (JLabel)e.getSource();
 				System.out.println("찾기 클릭");
+				new FindFrame();
 			}
 		});
 		

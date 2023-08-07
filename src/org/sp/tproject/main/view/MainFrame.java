@@ -49,6 +49,11 @@ public class MainFrame extends JFrame{
 		p_content=new JPanel();
 		createNavi();
 	
+
+		pages=new Page[2]; //4
+		pages[MAIN]=new MainPage();
+		pages[DIARY]=new DiaryPage();
+//		pages[MYPAGE]=new MyPage();
 			
 		//스타일
 		p_north.setBackground(new Color(233, 233, 233));
@@ -64,7 +69,7 @@ public class MainFrame extends JFrame{
 		add(p_content);
 		
 		setSize(width, height);
-		//setVisible(true);	//로그인 전에는 메인 프레임 안보이게
+//		setVisible(true);	//로그인 전에는 메인 프레임 안보이게
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		

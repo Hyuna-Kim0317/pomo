@@ -30,7 +30,6 @@ public class FindFrame extends JFrame{
 	//컨텐츠 페이지
 	FindPage[] findPages;
 	
-	
 
 	public FindFrame() {
 		p_north = new JPanel();
@@ -41,8 +40,7 @@ public class FindFrame extends JFrame{
 		dbManager = new DBManager();
 		clientDAO = new ClientDAO(dbManager);
 		
-		
-		
+
 		//페이지 생성
 		findPages[0] = new FindIdPage(this);
 		findPages[1] = new FindPassPage(this);

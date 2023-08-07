@@ -182,13 +182,14 @@ public class ClientDAO {
 		
 		con = dbManager.connect();
 		if(con==null) {
-			System.out.println("없는 아이디");			
+			System.out.println(" 아이디 찾기 접속 실패");			
 		}else {
 			StringBuilder sb = new StringBuilder();
 			
 			try {
 				sb.append("select * from client where name = ?");
 				pstmt = con.prepareStatement(sb.toString());
+				
 				//바인드 변수 채워넣기
 				pstmt.setString(1, name);
 				

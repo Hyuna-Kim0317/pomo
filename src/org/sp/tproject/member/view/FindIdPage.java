@@ -13,6 +13,8 @@ import javax.swing.JTextField;
 
 import org.sp.tproject.calendar.model.ClientDAO;
 
+import util.MailSender;
+
 public class FindIdPage extends FindPage{
 	FindFrame findFrame;
 	JPanel p_center;
@@ -28,6 +30,9 @@ public class FindIdPage extends FindPage{
 	JPanel p_check;
 	JButton bt_check;
 	
+	//메일 관련
+	MailSender mailSender;
+	
 	
 	public FindIdPage(FindFrame findFrame) {
 		
@@ -42,6 +47,9 @@ public class FindIdPage extends FindPage{
 		bt_auth = new JButton("인증하기");
 		p_check = new JPanel();
 		bt_check = new JButton("아이디 찾기");
+		
+		//메일 관련
+		mailSender = new MailSender();
 
 		//폰트
 		Font regist_text_font = new Font("goyang", Font.PLAIN, 30);
@@ -90,11 +98,22 @@ public class FindIdPage extends FindPage{
 		p_center.add(p_check);
 		p_check.add(bt_check);
 		
+		bt_email.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("인증버튼 클릭");
+				boolean flag = mailSender.send(t_email.getText(), "Pomo 인증번호", "인증번호는 1111 입니다.");
+			}
+		});
 		bt_check.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("아이디 찾기 클릭");
+				System.out.println("아이디 찾기 클릭"+t_name.getText());
+				
 				findFrame.find_id_name = t_name.getText();
 				System.out.println(findFrame.find_id_name);
+				
+				FindIdInfoPage findIdInfoPage=(FindIdInfoPage)findFrame.findPages[2];
+				findIdInfoPage.setId(findFrame.find_id_name);
+				
 				findFrame.showFindPage(2);
 			}
 			
